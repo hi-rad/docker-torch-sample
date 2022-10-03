@@ -1,0 +1,27 @@
+version: "3.9"
+services:
+  torch:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        DIST_ID: ${LINUX_DIST}
+    ports:
+      - ${JUPYTER_PORT}:${JUPYTER_PORT}
+    volumes:
+      - .:/code
+    command:
+      [
+        "jupyter",
+        "lab",
+        "--ip=*",
+        "--port=${JUPYTER_PORT}",
+        "--allow-root"
+      ]
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [ gpu ]

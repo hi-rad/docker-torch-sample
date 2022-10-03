@@ -1,0 +1,16 @@
+version: "3.9"
+services:
+  torch:
+    build: .
+    ports:
+      - ${JUPYTER_PORT}:${JUPYTER_PORT}
+    volumes:
+      - .:/code
+    command:
+      [
+        "jupyter",
+        "lab",
+        "--ip=*",
+        "--port=${JUPYTER_PORT}",
+        "--allow-root"
+      ]
